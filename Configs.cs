@@ -63,7 +63,7 @@ public class ConfigVIP : BasePluginConfig
 
 
 
-    [JsonPropertyName("WelcomeMessage")] public string WelcomeMessage { get; set; } = $"Welcom on server you are BEST VIP!";
+    [JsonPropertyName("WelcomeMessage")] public string WelcomeMessage { get; set; } = $"Welcome on server you are BEST VIP!";
     [JsonPropertyName("DBDatabase")] public string DBDatabase { get; set; } = "database";
     [JsonPropertyName("DBUser")] public string DBUser { get; set; } = "user";
     [JsonPropertyName("DBPassword")] public string DBPassword { get; set; } = "password";

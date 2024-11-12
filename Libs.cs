@@ -19,7 +19,6 @@ using CounterStrikeSharp.API.Modules.Menu;
 using static CounterStrikeSharp.API.Core.Listeners;
 using System.Runtime.Intrinsics.Arm;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
 using Nexd.MySQL;
 using System.Runtime.ExceptionServices;
 using CounterStrikeSharp.API.Core.Attributes;
@@ -30,8 +29,6 @@ using CounterStrikeSharp.API.Modules.Memory;
 using System.Runtime.InteropServices;
 using CounterStrikeSharp.API.Modules.Entities.Constants;
 using CSTimer = CounterStrikeSharp.API.Modules.Timers;
-using CounterStrikeSharp.API.Modules.Admin;
-using System.Drawing;
 using System.Globalization;
 
 namespace VIP
@@ -60,9 +57,9 @@ namespace VIP
         }
         static public bool is_vip(CCSPlayerController? player)
         {
-            if(player == null)
+            if (player == null)
             {
-                Server.PrintToConsole($"VIP Plugin - [ERROR] Canno't get a player");
+                Server.PrintToConsole($"VIP Plugin - [ERROR] Cannot get a player");
                 return false;
             }
             var client = player.Index;
@@ -112,7 +109,7 @@ namespace VIP
         }
         static public int get_vip_group(CCSPlayerController? player)
         {
-            if(player == null)
+            if (player == null)
             {
                 WriteColor("VIP Plugin - *[ERROR - get_vip_group]* Cannot get a player index..", ConsoleColor.Red);
                 return 100;
@@ -142,7 +139,7 @@ namespace VIP
             }
             return 100;
         }
-        
+
         public string get_name_group(CCSPlayerController? player)
         {
             if (player == null)
@@ -184,7 +181,7 @@ namespace VIP
             }
             return player.InGameMoneyServices.Account;
         }
-        static public bool is_alive (CCSPlayerController? player)
+        static public bool is_alive(CCSPlayerController? player)
         {
             if (!player.PawnIsAlive)
             {
@@ -196,14 +193,14 @@ namespace VIP
             }
             return false;
         }
-        static public void set_hp (CCSPlayerController? player, int hp)
+        static public void set_hp(CCSPlayerController? player, int hp)
         {
             if (player == null || !player.PawnIsAlive)
             {
                 return;
             }
             player.PlayerPawn.Value.Health = hp;
-            Server.PrintToConsole($"Iam setting up {hp} to player {player.PlayerName}");
+            Server.PrintToConsole($"I'm setting up {hp} to player {player.PlayerName}");
         }
         static public void set_armor(CCSPlayerController? player, int armor)
         {

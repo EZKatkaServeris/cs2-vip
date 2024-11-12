@@ -33,7 +33,7 @@ using Vector = CounterStrikeSharp.API.Modules.Utils.Vector;
 
 namespace VIP
 {
-    
+
     public partial class VIP
     {
         private readonly nint Handle;
@@ -45,26 +45,26 @@ namespace VIP
                 return HookResult.Continue;
             }
             var client = player.Index;
-                var message = info.GetArg(1);
-                string message_first = info.GetArg(1);
+            var message = info.GetArg(1);
+            string message_first = info.GetArg(1);
 
-                if (player == null || !player.IsValid || player.IsBot || message == null || message == "")
-                    return HookResult.Continue;
-                if (message_first.Substring(0, 1) == "/" || message_first.Substring(0, 1) == "!" || message_first.Substring(0, 1) == "rtv")
-                    return HookResult.Continue;
-                var GetTag = "";
-                if (IsVIP[client] == 1)
-                {
-                    GetTag = $" {ChatColors.Lime}VIP {ChatColors.Default}»";
-                    var isAlive = player.PawnIsAlive ? "" : "-DEAD-";
-
-                    Server.PrintToChatAll(ReplaceTags($"{isAlive} {GetTag} {ChatColors.Red}{player.PlayerName} {ChatColors.Default}: {ChatColors.Lime}{message}"));
-                }
-                else
-                {
+            if (player == null || !player.IsValid || player.IsBot || message == null || message == "")
                 return HookResult.Continue;
-                }
-                return HookResult.Handled;
+            if (message_first.Substring(0, 1) == "/" || message_first.Substring(0, 1) == "!" || message_first.Substring(0, 1) == "rtv")
+                return HookResult.Continue;
+            var GetTag = "";
+            if (IsVIP[client] == 1)
+            {
+                GetTag = $" {ChatColors.Lime}VIP {ChatColors.Default}»";
+                var isAlive = player.PawnIsAlive ? "" : "-DEAD-";
+
+                Server.PrintToChatAll(ReplaceTags($"{isAlive} {GetTag} {ChatColors.Red}{player.PlayerName} {ChatColors.Default}: {ChatColors.Lime}{message}"));
+            }
+            else
+            {
+                return HookResult.Continue;
+            }
+            return HookResult.Handled;
         }
         private HookResult OnPlayerChatTeam(CCSPlayerController? player, CommandInfo info)
         {
@@ -73,31 +73,32 @@ namespace VIP
                 return HookResult.Continue;
             }
             var client = player.Index;
-                var message = info.GetArg(1);
-                string message_first = info.GetArg(1);
+            var message = info.GetArg(1);
+            string message_first = info.GetArg(1);
 
-                if (player == null || !player.IsValid || player.IsBot || message == null || message == "")
-                    return HookResult.Continue;
-                if (message_first.Substring(0, 1) == "/" || message_first.Substring(0, 1) == "!" || message_first.Substring(0, 1) == "rtv")
-                    return HookResult.Continue;
-                var GetTag = "";
-                if (IsVIP[client] == 1)
+            if (player == null || !player.IsValid || player.IsBot || message == null || message == "")
+                return HookResult.Continue;
+            if (message_first.Substring(0, 1) == "/" || message_first.Substring(0, 1) == "!" || message_first.Substring(0, 1) == "rtv")
+                return HookResult.Continue;
+            var GetTag = "";
+            if (IsVIP[client] == 1)
+            {
+                GetTag = $" {ChatColors.Lime}VIP {ChatColors.Default}»";
+                var isAlive = player.PawnIsAlive ? "" : "-DEAD-";
+                for (int i = 1; i <= Server.MaxPlayers; i++)
                 {
-                    GetTag = $" {ChatColors.Lime}VIP {ChatColors.Default}»";
-                    var isAlive = player.PawnIsAlive ? "" : "-DEAD-";
-                    for (int i = 1; i <= Server.MaxPlayers; i++)
-                    {
-                        CCSPlayerController? pc = Utilities.GetPlayerFromIndex(i);
-                        if (pc == null || !pc.IsValid || pc.IsBot || pc.TeamNum != player.TeamNum) continue;
-                        pc.PrintToChat(ReplaceTags($"{isAlive}(TEAM) {GetTag} {ChatColors.Red}{player.PlayerName} {ChatColors.Default}: {ChatColors.Lime}{message}"));
-                    }
+                    CCSPlayerController? pc = Utilities.GetPlayerFromIndex(i);
+                    if (pc == null || !pc.IsValid || pc.IsBot || pc.TeamNum != player.TeamNum) continue;
+                    pc.PrintToChat(ReplaceTags($"{isAlive}(TEAM) {GetTag} {ChatColors.Red}{player.PlayerName} {ChatColors.Default}: {ChatColors.Lime}{message}"));
                 }
-                else
-                {
-                    return HookResult.Continue;
-                }
+            }
+            else
+            {
+                return HookResult.Continue;
+            }
             return HookResult.Handled;
         }
+
         [GameEventHandler]
         public HookResult OnClientConnect(EventPlayerConnectFull @event, GameEventInfo info)
         {
@@ -155,14 +156,14 @@ namespace VIP
                 }
             }
 
-            if(Round == 0 || Round == -1)
+            if (Round == 0 || Round == -1)
             {
                 foreach (var l_player in Utilities.GetPlayers())
                 {
                     int?[] HaveC4 = new int?[65];
 
                     CCSPlayerController player = l_player;
-                    if(player == null && !player.IsValid)
+                    if (player == null && !player.IsValid)
                     {
                         return HookResult.Continue;
                     }
@@ -217,6 +218,7 @@ namespace VIP
 
             return HookResult.Continue;
         }
+
         [GameEventHandler]
         public HookResult OnClientSpawn(EventPlayerSpawn @event, GameEventInfo info)
         {
@@ -355,6 +357,7 @@ namespace VIP
             }
             return HookResult.Continue;
         }
+
         [GameEventHandler]
         public HookResult OnBombDetonate(EventBombDefused @event, GameEventInfo info)
         {
@@ -438,7 +441,7 @@ namespace VIP
         [GameEventHandler]
         public HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info)
         {
-            if(Bombplanted == true)
+            if (Bombplanted == true)
             {
                 return HookResult.Continue;
             }
@@ -454,40 +457,40 @@ namespace VIP
                 return HookResult.Continue;
             if (player != attacker)
             {
-                
-                if (Config.GiveHPAfterKill || Config.GiveMoneyAfterKill)
-                    {
-                        if (Config.AllowKillMessages)
-                        {
-                        Server.PrintToChatAll($" {Config.Prefix} {Localizer["KillInfo", player.PlayerName, attacker.PlayerName]}");
-                        }
-                    }
-                    if (Config.GiveMoneyAfterKill)
-                    {
-                        var AttackerMoneys = MoneyValueAttacker.Account;
-                        MoneyValueAttacker.Account = AttackerMoneys + Config.RewardsClass.KillMoney;
-                        //attacker.PrintToChat($" {Config.Prefix} You got {ChatColors.Lime}+{Config.RewardsClass.KillMoney} ${ChatColors.Default} for kill player {ChatColors.LightRed}{player.PlayerName}{ChatColors.Default}, enjoy.");
-                        attacker.PrintToChat($" {Config.Prefix} {Localizer["MoneyRewards", Config.RewardsClass.KillMoney, player.PlayerName]}");
 
-                    }
-                if (Config.GiveHPAfterKill)
+                if (Config.GiveHPAfterKill || Config.GiveMoneyAfterKill)
+                {
+                    if (Config.AllowKillMessages)
                     {
-                        var health_attacker = attacker.PlayerPawn.Value.Health;
-                        Server.NextFrame(() =>
-                        {
-                            AddTimer(0.1f, () => { set_hp(attacker, health_attacker + Config.RewardsClass.KillHP); });
-                        });
-                        Server.PrintToConsole($"VIP Plugins - Here is bug from valve https://discord.com/channels/1160907911501991946/1160907912445710482/1175583981387927602");
-                        attacker.PrintToChat($" {Config.Prefix} {Localizer["KillRewards", Config.RewardsClass.KillHP, player.PlayerName]}");
+                        Server.PrintToChatAll($" {Config.Prefix} {Localizer["KillInfo", player.PlayerName, attacker.PlayerName]}");
                     }
+                }
+                if (Config.GiveMoneyAfterKill)
+                {
+                    var AttackerMoneys = MoneyValueAttacker.Account;
+                    MoneyValueAttacker.Account = AttackerMoneys + Config.RewardsClass.KillMoney;
+                    //attacker.PrintToChat($" {Config.Prefix} You got {ChatColors.Lime}+{Config.RewardsClass.KillMoney} ${ChatColors.Default} for kill player {ChatColors.LightRed}{player.PlayerName}{ChatColors.Default}, enjoy.");
+                    attacker.PrintToChat($" {Config.Prefix} {Localizer["MoneyRewards", Config.RewardsClass.KillMoney, player.PlayerName]}");
+
+                }
+                if (Config.GiveHPAfterKill)
+                {
+                    var health_attacker = attacker.PlayerPawn.Value.Health;
+                    Server.NextFrame(() =>
+                    {
+                        AddTimer(0.1f, () => { set_hp(attacker, health_attacker + Config.RewardsClass.KillHP); });
+                    });
+                    Server.PrintToConsole($"VIP Plugins - Here is bug from valve https://discord.com/channels/1160907911501991946/1160907912445710482/1175583981387927602");
+                    attacker.PrintToChat($" {Config.Prefix} {Localizer["KillRewards", Config.RewardsClass.KillHP, player.PlayerName]}");
+                }
 
             }
             return HookResult.Continue;
         }
+
         [GameEventHandler(HookMode.Pre)]
         public HookResult OnPlayerBlind(EventPlayerBlind @event, GameEventInfo info)
         {
-
             var player = @event.Userid;
             if (!player.IsValid || !player.PawnIsAlive || player == null)
                 return HookResult.Continue;
@@ -499,7 +502,7 @@ namespace VIP
             var attacker_team = attacker.TeamNum;
             if (Config.CommandOnGroup.Flash >= get_vip_group(player))
                 return HookResult.Continue;
-            if(player_team == attacker_team)
+            if (player_team == attacker_team)
             {
                 @event.BlindDuration = 0.1f;
                 player.PlayerPawn.Value.FlashMaxAlpha = 0.5f;
