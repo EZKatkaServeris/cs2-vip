@@ -38,6 +38,7 @@ namespace VIP
 
             settings_menu_open(player);
         }
+
         [ConsoleCommand("css_addfakeplayer", "Add fake client for testing reservation slots")]
         public void addfakeplayer(CCSPlayerController? player, CommandInfo info)
         {
@@ -47,6 +48,7 @@ namespace VIP
                 Server.PrintToConsole($"You successful add new fake player on server/debugmode. Now are connected players {ConnectedPlayers}");
             }
         }
+
         [ConsoleCommand("css_addfakeround", "Add fake round for testing weapons")]
         public void addfakeround(CCSPlayerController? player, CommandInfo info)
         {
@@ -56,6 +58,7 @@ namespace VIP
                 Server.PrintToConsole($"You successful add new round on server/debugmode. Now are round {Round}");
             }
         }
+
         [ConsoleCommand("css_testvip", "Test VIP")]
         public void CommandTESTVIP(CCSPlayerController? player, CommandInfo info)
         {
@@ -113,6 +116,7 @@ namespace VIP
                 player.PrintToChat($" {Config.Prefix} On this server is not {ChatColors.Red}allowed{ChatColors.Lime} /testvip{ChatColors.Default}, contact the owner.");
             }
         }
+
         [ConsoleCommand("css_activator", "Activate VIP from Tokens")]
         public void CommandActivator(CCSPlayerController? player, CommandInfo info)
         {
@@ -167,6 +171,7 @@ namespace VIP
                 player.PrintToChat($" {ChatColors.Lime}=========================================");
             }
         }
+
         [ConsoleCommand("css_generatevip", "Generate new VIP token")]
         public void CommandGenerateVIP(CCSPlayerController? player, CommandInfo info)
         {
@@ -202,8 +207,8 @@ namespace VIP
             var group_int = Group;
 
             var timeRemaining = DateTimeOffset.FromUnixTimeSeconds(TimeToUTC) - DateTimeOffset.UtcNow;
-                var timeRemainingFormatted =
-                $"{timeRemaining.Days}d {timeRemaining.Hours:D2}:{timeRemaining.Minutes:D2}:{timeRemaining.Seconds:D2}";
+            var timeRemainingFormatted =
+            $"{timeRemaining.Days}d {timeRemaining.Hours:D2}:{timeRemaining.Minutes:D2}:{timeRemaining.Seconds:D2}";
 
             MySqlDb MySql = new MySqlDb(Config.DBHost, Config.DBUser, Config.DBPassword, Config.DBDatabase);
             MySqlQueryValue values = new MySqlQueryValue()
@@ -218,10 +223,8 @@ namespace VIP
             Server.PrintToConsole($"Ending (days): {TimeSec}");
             Server.PrintToConsole($"Group ID: {Group}");
             Server.PrintToConsole($"==========================================");
-
-
-
         }
+
         [ConsoleCommand("css_addvip", "Add new VIP")]
         public void CommandAddVIP(CCSPlayerController? player, CommandInfo info)
         {
@@ -263,7 +266,7 @@ namespace VIP
             {
                 var TimeToUTC = DateTime.UtcNow.AddDays(Convert.ToInt32(TimeSec)).GetUnixEpoch();
                 var timeofvip = 0;
-                if(TimeSec == "0")
+                if (TimeSec == "0")
                 {
                     timeofvip = 0;
                 }
@@ -272,7 +275,7 @@ namespace VIP
                     timeofvip = DateTime.UtcNow.AddDays(Convert.ToInt32(TimeSec)).GetUnixEpoch();
                 }
 
-                
+
                 var timeRemaining = DateTimeOffset.FromUnixTimeSeconds(TimeToUTC) - DateTimeOffset.UtcNow;
                 var timeRemainingFormatted =
                 $"{timeRemaining.Days}d {timeRemaining.Hours:D2}:{timeRemaining.Minutes:D2}:{timeRemaining.Seconds:D2}";
@@ -292,6 +295,7 @@ namespace VIP
 
             }
         }
+
         [ConsoleCommand("css_vips", "Load all VIPs on server")]
         public void CommandVIPList(CCSPlayerController? controller, CommandInfo info)
         {
@@ -305,6 +309,7 @@ namespace VIP
             controller.PrintToChat($" {ChatColors.Green}► Numbers of VIPs{ChatColors.Default} {ChatColors.Purple}{vips}{ChatColors.Default} {ChatColors.Green}◄ Numbers of VIPs");
             controller.PrintToChat($" {ChatColors.Green}===!-!==={ChatColors.Lime} VIP {ChatColors.Default}List {ChatColors.Green}===!-!===");
         }
+
         [ConsoleCommand("css_vip", "Info about VIP")]
         public void CommandVIPInfo(CCSPlayerController? player, CommandInfo info)
         {
@@ -343,7 +348,7 @@ namespace VIP
             }
             player.PrintToChat($" {ChatColors.Green}==!-!=={ChatColors.Lime} VIP {ChatColors.Default}Status {ChatColors.Green}==!-!==");
             player.PrintToChat($" {ChatColors.Gold}» {ChatColors.Default}You have {status}{ChatColors.Default} VIP Status.");
-            if(status_i == 1)
+            if (status_i == 1)
             {
                 player.PrintToChat($" {ChatColors.Gold}» {ChatColors.Default}Your {ChatColors.Lime}VIP have time {formating}{ChatColors.Default}.");
                 player.PrintToChat($" {ChatColors.Gold}» {ChatColors.Default}Your {ChatColors.Lime}VIP {ChatColors.Default}group {ChatColors.Green}{get_name_group(player)}{ChatColors.Default}.");
@@ -352,7 +357,7 @@ namespace VIP
                 {
                     player.PrintToChat($" {ChatColors.Gold}► {ChatColors.Default}Selecting weapons : {ChatColors.Lime}/weapon {ChatColors.Default}1,2,3,4,5{ChatColors.Gold} ◄");
                 }
-                if (get_vip_group(player) >= Config.CommandOnGroup.Pack )
+                if (get_vip_group(player) >= Config.CommandOnGroup.Pack)
                 {
                     player.PrintToChat($" {ChatColors.Gold}► {ChatColors.Default}Selecting package : {ChatColors.Lime}/pack {ChatColors.Default}1,2{ChatColors.Gold} ◄");
                 }
@@ -364,12 +369,9 @@ namespace VIP
 
             }
             player.PrintToChat($" {ChatColors.Green}==!-!=={ChatColors.Lime} VIP {ChatColors.Default}Status {ChatColors.Green}==!-!==");
-
-
         }
-        [ConsoleCommand("css_respawnvip", "Command to respawn player")]
 
-        
+        [ConsoleCommand("css_respawnvip", "Command to respawn player")]
         public void CommandRespawn(CCSPlayerController? player, CommandInfo info)
         {
             var client = player.Index;
@@ -416,14 +418,14 @@ namespace VIP
                     player.PrintToChat($" {Config.Prefix} {Localizer["RespawnUsed"]}");
                 }
 
-                
+
                 player.PlayerPawn.Value.Respawn();
 
                 RespawnUsed[client] = 1;
             }
         }
-        [ConsoleCommand("css_guns_off", "Disable automatically weapons")]
 
+        [ConsoleCommand("css_guns_off", "Disable automatically weapons")]
         public void CommandGUNS_off(CCSPlayerController? player, CommandInfo info)
         {
             var client = player.Index;
@@ -437,21 +439,22 @@ namespace VIP
                 return;
             }
 
-            if (LastUsed[client] >= 1)
+            if (LastUsed[client] > 0)
             {
                 Used[client] = 0;
                 LastUsed[client] = 0;
                 if (Config.Messages.AllowCenterMessages)
                 {
                     player.PrintToCenter($"{Localizer["TurnedOff"]}");
-                }else
+                }
+                else
                 {
                     player.PrintToChat($" {Config.Prefix} {Localizer["TurnedOff"]}");
                 }
             }
         }
-        [ConsoleCommand("css_weapon", "Select a Weapon from commands")]
 
+        [ConsoleCommand("css_weapon", "Select a Weapon from commands")]
         public void SelectWeapon(CCSPlayerController? player, CommandInfo info)
         {
             var PackagesID = info.ArgByIndex(1);
@@ -552,8 +555,8 @@ namespace VIP
             }
 
         }
-        [ConsoleCommand("css_pack", "Select a packages of weapons")]
 
+        [ConsoleCommand("css_pack", "Select a packages of weapons")]
         public void PackagesWeapons(CCSPlayerController? player, CommandInfo info)
         {
             var PackagesID = info.ArgByIndex(1);
@@ -603,7 +606,7 @@ namespace VIP
                 Used[client] = 1;
                 LastUsed[client] = 2;
                 player.PrintToChat($" {Config.Prefix} {Localizer["Packages_one"]}");
-                foreach(var weapon in Config.Pack1Settings.Weapons)
+                foreach (var weapon in Config.Pack1Settings.Weapons)
                 {
                     if (CheckIsHaveWeapon($"{weapon}", player) == false)
                     {
